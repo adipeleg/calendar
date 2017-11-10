@@ -93,9 +93,15 @@
 
         function findRealLineMax(events, data) {
             for (var i = 0; i < events.length; i++) {
+                var max = events[i].lineMax;
                 data[events[i].id].forEach(function (ev) {
-                    ev.lineMax = ev.lineMax > events[i].lineMax ? ev.lineMax : events[i].lineMax;
+                    max = max > ev.lineMax ? max : ev.lineMax;
                 });
+                data[events[i].id].forEach(function (ev) {
+                    ev.lineMax = max;
+                    console.log(ev.id,max)
+                });
+                console.log(data, max)
             }
         }
 
@@ -105,6 +111,13 @@
                 return a.start - b.start;
             });
             addTopAndFindLineMaxElems(events, data);
+            events.sort(function (a, b) {
+                return b.lineMax - a.lineMax;
+            });
+            findRealLineMax(events, data);
+            events.sort(function (a, b) {
+                return a.start - b.start;
+            });
             findRealLineMax(events, data);
 
             for (var i = 0; i < events.length; i++) {
@@ -143,11 +156,6 @@
                 id: 3,
                 start: 610,
                 end: 670
-            },
-            {
-                id: 4,
-                start: 60,
-                end: 615
             }
         ]
         var containerWidth = 600;
