@@ -22,6 +22,7 @@ body {
 .main-wrapper {
     position: relative;
     left: 50px;
+    top: 100px;
 }
 
 #container {
@@ -31,9 +32,9 @@ body {
     box-sizing: border-box;
     background-color: #ECECEC;
     position: relative;
-    margin-top: 100px;
     border-left: 1px solid #DCDCDC;
     margin-left: 60px;
+    top: 8px;
 }
 
 .event-div {
@@ -56,12 +57,13 @@ body {
 }
 
 .times-wrapper {
-    margin-top: 94px;
+    height: 736px;
+    position: absolute;
 }
 
 #times {
     position: absolute;
-    height: 728px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -72,7 +74,7 @@ body {
 #times-two {
     position: absolute;
     left: 36px;
-    height: 728px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
