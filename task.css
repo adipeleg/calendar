@@ -66,6 +66,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     color: #7B7B7B;
+    align-items: flex-end;
 }
 
 #times-two {
