@@ -99,9 +99,7 @@
                 });
                 data[events[i].id].forEach(function (ev) {
                     ev.lineMax = max;
-                    console.log(ev.id,max)
                 });
-                console.log(data, max)
             }
         }
 
@@ -137,27 +135,25 @@
                 }
                 events[i].left = left1;
             }
-            console.log(events)
             return events;
         }
         events = [{
-                id: 0,
-                start: 30,
-                end: 150
-            }, {
-                id: 1,
-                start: 540,
-                end: 600
-            }, {
-                id: 2,
-                start: 560,
-                end: 620
-            }, {
-                id: 3,
-                start: 610,
-                end: 670
-            }
-        ]
+            id: 0,
+            start: 30,
+            end: 150
+        }, {
+            id: 1,
+            start: 540,
+            end: 600
+        }, {
+            id: 2,
+            start: 560,
+            end: 620
+        }, {
+            id: 3,
+            start: 610,
+            end: 670
+        }]
         var containerWidth = 600;
         events = task1(events, containerWidth)
         buildView(events, containerWidth)
