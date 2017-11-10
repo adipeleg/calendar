@@ -121,20 +121,19 @@
                 var count;
                 var left1;
                 [left1, count] = calcEventLeft(containerWidth, events[i], data);
+                [left1, count, partWidth] = calcEventLeft(containerWidth, events[i], data, count);
+                var blockedPos =[];
                 data[events[i].id].forEach(function (ev) {
                     if (ev.id === events[i].id) {
                         return;
                     }
-                    [left1, count, partWidth] = calcEventLeft(containerWidth, events[i], data, count);
-                    console.log(ev.id, ev.left ,left1)
-                    if (ev.left === left1) {
-                        count += 1;
-                        [left1, count, partWidth] = calcEventLeft(containerWidth, events[i], data, count);
-                        // left1 = (count % events[i].lineMax) * partWidth + 10;
-                        console.log(ev.id,ev.left ,left1)
-                    }
-
+                    blockedPos.push(ev.left);
                 });
+                while (blockedPos.includes(left1)) {
+                    count += 1;
+                    [left1, count, partWidth] = calcEventLeft(containerWidth, events[i], data, count);
+                }
+                console.log(blockedPos)
                 events[i].left = left1;
             }
             console.log(data)
@@ -142,8 +141,8 @@
         }
         events = [{
                 id: 0,
-                start: 20,
-                end: 700
+                start: 620,
+                end: 650
             },
             {
                 id: 1,
