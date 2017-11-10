@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="task.css">
+</head>
+
+<body>
+    <div class='header'>facebook</div>
+    <div class='main-wrapper'>
+        <div class='times-wrapper'>
+            <div id='times'></div>
+            <div id='times-two'></div>
+        </div>
+        <div id="container"></div>
+    </div>
+
+    <script>
+        function buildTime() {
+            var times = ['9:00', '10:00', '11:00', '12:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00',
+                '8:00', '9:00'
+            ]
+            timeContainer = document.getElementById("times");
+            times.forEach(function (time) {
+                var timeDiv = document.createElement("div");
+                var time = document.createTextNode(time);
+                timeDiv.appendChild(time);
+                timeContainer.appendChild(timeDiv);
+            })
+            var times_two = ['AM', '9:30', 'AM', '10:30', 'AM', '11:30', 'PM', '12:30', 'PM', '1:30', 'PM', '2:30',
+                'PM', '3:30', 'PM', '4:30', 'PM', '5:30', 'PM', '6:30',
+                'PM', '7:30', 'PM', '8:30', 'PM'
+            ]
+            timeContainer = document.getElementById("times-two");
+            times_two.forEach(function (time) {
+                var timeDiv = document.createElement("div");
+                var time = document.createTextNode(time);
+                timeDiv.appendChild(time);
+                timeContainer.appendChild(timeDiv);
+            })
+            // for (var i=0; i<12; i++) {
+            //     var timeDiv = document.createElement("div");
+            //         var time = document.createTextNode(9+i+':00');
+            //         timeDiv.appendChild(time)
+            //         timeContainer.appendChild(timeDiv);
+            // }
+        }
+
+        function buildView(events, dailyContainer) {
+            for (var i = 0; i < events.length; i++) {
+                var text = document.createElement("div");
+                var line1 = document.createTextNode("Sample Item");
+                var text2 = document.createElement("div");
+                var line2 = document.createTextNode("Sample Location");
+                text.appendChild(line1)
+                text.className = 'title';
+                text2.appendChild(line2)
+                text2.className = 'sub-title';
+                event = events[i];
+                eventWidth = 600 / event.lineMax;
+                eventHeight = event.end - event.start;
+                var eventDiv = document.createElement("div");
+                eventDiv.appendChild(text);
+                eventDiv.appendChild(text2);
+                eventDiv.className = 'event-div';
+                var styleStr = 'top:' + event.top + 'px;left:' + event.left + 'px;width:' + eventWidth + 'px;height: ' +
+                    +eventHeight + 'px';
+                eventDiv.style.cssText = styleStr;
+                dailyContainer.appendChild(eventDiv)
+            }
+            buildTime();
+        }
+
+        function findLineMax(curr_ev, event, data) {
+            event.lineMax = event.lineMax || 0;
+            event.lineMax = data[curr_ev.id].length > event.lineMax ? data[curr_ev.id].length :
+                event.lineMax;
+        }
+
+
+        function addTopAndFindLineMaxElems(events, data) {
+            for (var i = 0; i < events.length; i++) {
+                events[i].top = events[i].start;
+                data[events[i].id] = [];
+                for (var j = 0; j <= i; j++) {
+                    if (events[i].start < events[j].end) {
+                        data[events[i].id].push(events[j]);
+                    }
+                }
+                data[events[i].id].forEach(function (event) {
+                    findLineMax(events[i], event, data);
+                })
+            }
+        }
+
+        function calcEventLeft(containerWidth, curr_ev, data, count) {
+            var partWidth = containerWidth / curr_ev.lineMax;
+            count = count || data[curr_ev.id].length - 1;
+            var left1 = (count % curr_ev.lineMax) * partWidth + 10;
+            return [left1, count, partWidth];
+        }
+
+        function findRealLineMax(events, data) {
+            for (var i = 0; i < events.length; i++) {
+                 data[events[i].id].forEach(function (ev) {
+                    events[i].lineMax = ev.lineMax > events[i].lineMax ? ev.lineMax : events[i].lineMax;
+                 });
+            }
+        }
+
+        function task1(events) {
+            var data = {};
+            var containerWidth = 600;
+            events.sort(function (a, b) {
+                return a.start - b.start;
+            });
+            addTopAndFindLineMaxElems(events, data);
+            findRealLineMax(events, data);
+            
+            for (var i = 0; i < events.length; i++) {
+                var count;
+                var left1;
+                [left1, count] = calcEventLeft(containerWidth, events[i], data);
+                data[events[i].id].forEach(function (ev) {
+                    if (ev.id === events[i].id) {
+                        return;
+                    }
+                    [left1, count, partWidth] = calcEventLeft(containerWidth, events[i], data, count);
+                    console.log(ev.id, ev.left ,left1)
+                    if (ev.left === left1) {
+                        count += 1;
+                        [left1, count, partWidth] = calcEventLeft(containerWidth, events[i], data, count);
+                        // left1 = (count % events[i].lineMax) * partWidth + 10;
+                        console.log(ev.id,ev.left ,left1)
+                    }
+
+                });
+                events[i].left = left1;
+            }
+            console.log(data)
+            return events;
+        }
+        events = [{
+                id: 0,
+                start: 20,
+                end: 700
+            },
+            {
+                id: 1,
+                start: 30,
+                end: 150
+            }, {
+                id: 2,
+                start: 540,
+                end: 600
+            }, {
+                id: 3,
+                start: 560,
+                end: 620
+            }, {
+                id: 4,
+                start: 610,
+                end: 670
+            }
+        ]
+        events = task1(events)
+        dailyContainer = document.getElementById("container");
+        buildView(events, dailyContainer)
+        console.log(events)
+    </script>
+
+</body>
+
+</html>

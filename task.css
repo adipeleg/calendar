@@ -1,0 +1,82 @@
+body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    background-color: #496DA5;
+    color: white;
+    font-weight: bold;
+    padding: 4px 24px;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+.main-wrapper {
+    position: relative;
+    left: 50px;
+}
+
+#container {
+    width: 620px;
+    height: 720px;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    background-color: #ECECEC;
+    position: relative;
+    margin-top: 100px;
+    border-left: 1px solid #DCDCDC;
+    margin-left: 60px;
+}
+
+.event-div {
+    position: absolute;
+    border: 1px solid #DCDCDC;
+    border-left: 4px solid #496DA5;
+    box-sizing: border-box;
+    background-color: white;
+    padding: 8px;
+    overflow-y: auto;
+}
+
+.title {
+    color: #496DA5;
+}
+
+.sub-title {
+    color: #6D6D6D;
+    font-size: 10px;
+}
+
+.times-wrapper {
+    margin-top: 94px;
+}
+
+#times {
+    position: absolute;
+    height: 728px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #7B7B7B;
+}
+
+#times-two {
+    position: absolute;
+    left: 36px;
+    height: 728px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 8px;
+    line-height: 18px;
+    color: #B0B0B0;
+}
