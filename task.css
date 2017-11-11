@@ -19,17 +19,17 @@ body {
     font-size: 20px;
 }
 
-.main-wrapper {
+#main-wrapper {
     position: relative;
     left: 50px;
     top: 100px;
 }
 
-.main-wrapper .times-wrapper {
+#main-wrapper .times-wrapper {
     height: 736px;
     position: absolute;
 }
-.main-wrapper #container {
+#main-wrapper .container {
     width: 620px;
     height: 720px;
     padding: 0px 10px;
@@ -41,7 +41,7 @@ body {
     top: 8px;
 }
 
-.main-wrapper #container .event-div {
+#main-wrapper .container .event-div {
     position: absolute;
     border: 1px solid #DCDCDC;
     border-left: 4px solid #496DA5;
@@ -51,16 +51,16 @@ body {
     overflow-y: auto;
 }
 
-.main-wrapper #container .event-div .title {
+#main-wrapper .container .event-div .title {
     color: #496DA5;
 }
  
-.main-wrapper #container .event-div .sub-title {
+#main-wrapper .container .event-div .sub-title {
     color: #6D6D6D;
     font-size: 10px;
 }
 
-.main-wrapper .times-wrapper #times {
+#main-wrapper .times-wrapper #times {
     position: absolute;
     height: 100%;
     display: flex;
@@ -70,7 +70,7 @@ body {
     align-items: flex-end;
 }
 
-.main-wrapper .times-wrapper #times-two {
+#main-wrapper .times-wrapper #times-two {
     position: absolute;
     left: 36px;
     height: 100%;

@@ -7,12 +7,12 @@
 
 <body>
     <div class='header'>facebook</div>
-    <div class='main-wrapper'>
+    <div id='main-wrapper'>
         <div class='times-wrapper'>
             <div id='times'></div>
             <div id='times-two'></div>
         </div>
-        <div id="container"></div>
+        <!-- <div id="container"></div> -->
     </div>
 
     <script>
@@ -25,9 +25,12 @@
                 timeContainer.appendChild(timeDiv);
             })
         }
-
-        function buildView(events, containerWidth, containerName) {
-            dailyContainer = document.getElementById(containerName);
+        function buildEventsView(events, index) {
+            var mainContainer = document.getElementById('main-wrapper');
+            var dailyContainer = document.createElement("div");
+            dailyContainer.className = 'container';
+            dailyContainer.id = 'day-' + index;
+            mainContainer.appendChild(dailyContainer);
             events.forEach(function(event) {
                 var text = document.createElement("div");
                 var line1 = document.createTextNode("Sample Item");
@@ -48,6 +51,9 @@
                 dailyContainer.appendChild(eventDiv)
             })
 
+        }
+        function buildView(events, containerWidth) {
+            buildEventsView(events, 1);
             var times = ['9:00', '10:00', '11:00', '12:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00',
                 '8:00', '9:00'
             ];
@@ -80,13 +86,20 @@
             })
         }
 
-        function calcEventLeftPos(containerWidth, curr_ev, data, count) {
-            var partWidth = containerWidth / curr_ev.numOfCollisions;
-            count = count || data[curr_ev.id].length - 1;
-            var leftCandidate = (count % curr_ev.numOfCollisions) * partWidth + 10;
-            return [leftCandidate, count];
+        function sortingArrayASC(events, key ) {
+            events.sort(function (a, b) {
+                return a[key] - b[key];
+            });
+
+        }
+        function sortingArrayDESC(events, key ) {
+            events.sort(function (a, b) {
+                return b[key] - a[key];
+            });
+
         }
 
+        
         function findRealnumOfCollisions(events, data) {
             events.forEach(function(event) {
                 var max = event.numOfCollisions;
@@ -98,20 +111,20 @@
                 });
             })
         }
-
+        function calcEventLeftPos(containerWidth, curr_ev, data, count) {
+            var partWidth = containerWidth / curr_ev.numOfCollisions;
+            count = count || data[curr_ev.id].length - 1;
+            var leftCandidate = (count % curr_ev.numOfCollisions) * partWidth + 10;
+            return [leftCandidate, count];
+        }
+        
         function calcEventsLocation(events, containerWidth) {
             var data = {};
-            events.sort(function (a, b) {
-                return a.start - b.start;
-            });
+            sortingArrayASC(events, 'start')
             addTopAndCalcNumOfCollEvents(events, data);
-            events.sort(function (a, b) {
-                return b.numOfCollisions - a.numOfCollisions;
-            });
+            sortingArrayDESC(events, 'numOfCollisions')
             findRealnumOfCollisions(events, data);
-            events.sort(function (a, b) {
-                return a.start - b.start;
-            });
+            sortingArrayASC(events, 'start')
             findRealnumOfCollisions(events, data);
             events.forEach(function(event) {
                 var count;
@@ -136,7 +149,7 @@
 
         function oneDayCalender(events, containerWidth) {
             events = calcEventsLocation(events, containerWidth)
-            buildView(events, containerWidth, 'container')
+            buildView(events, containerWidth)
         }
         
         
