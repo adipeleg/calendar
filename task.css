@@ -26,8 +26,11 @@ body {
 }
 
 #main-wrapper .times-wrapper {
-    height: 736px;
+    height: 735px;
     position: absolute;
+}
+#main-wrapper .day-wrapper {
+    margin-bottom: 60px;
 }
 #main-wrapper .container {
     width: 620px;
